@@ -1,0 +1,142 @@
+import numpy as np
+import random, time, copy, warnings
+
+POPULATION_SIZE = 100
+GENES = [1, -1, -1, 1]
+TARGET = '9518'
+# TODO Action = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# TODO rew = 0.0  done = False
+# TODO info = {'level_end_bonus': 0, 'rings': 71,
+# 'score': 90, 'zone': 0, 'act': 0,
+# 'screen_x_end': 9407, 'screen_y': 1024,
+# 'lives': 2, 'x': 9518, 'y': 1200, 'screen_x': 9358}
+pos_list = [0, 1, 2, 3]
+mutation = 0.03
+poblacion = 100
+pressure = 2  # cantidad de individuos seleccionados para reproduccion
+target = []
+
+class Gene:
+    pos_target = 9546
+
+    def generate_parent(self):
+        min_mov = np.array([[0, 0, 0, 0]])
+        mov = [1, 1, 0, 1]
+        for i in np.arange(10000):
+            temp = np.array([0, 0, 0, 0])
+            pos1, pos2 = random.sample(pos_list, 2)
+
+            mov_ = random.sample(mov, 2)
+            temp[pos1] = mov_[0]
+            temp[pos2] = mov_[1]
+
+            temp = np.array([temp])
+            min_mov = np.concatenate((min_mov, temp), axis=0)
+        return min_mov
+
+    def get_fitness(self, guess_mov, target):
+        for j in range(len(guess_mov)):
+            if guess_mov[j]:
+                pass
+
+    def mutation(population):
+    """
+        Se mutan los individuos al azar. Sin la mutacion de nuevos genes nunca podria
+        alcanzarse la solucion.
+    """ 
+    for i in range(len(population)-pressure):
+        if random.random() <= mutation_chance: #Cada individuo de la poblacion (menos los padres) tienen una probabilidad de mutar
+            punto = random.randint(0,largo-1) #Se elgie un punto al azar
+            nuevo_valor = random.randint(1,9) #y un nuevo valor para este punto
+  
+            #Es importante mirar que el nuevo valor no sea igual al viejo
+            while nuevo_valor == population[i][punto]:
+                nuevo_valor = random.randint(1,9)
+  
+            #Se aplica la mutacion
+            population[i][punto] = nuevo_valor
+  
+    return population
+
+
+    def get_best_individuo(self):
+        '''
+        TODO: calculamos el erro absoluto de la posición de maxima del jugador
+        TODO: Error absoluto = 9546 - la posición maxima
+        TODO: Error realtivo = Erro absoluto/ 9546
+        '''
+        pass
+'''
+    * *- Generamos una poblacion de 10 individuos
+    - Cada individuo tiene una matriz de movimiento [X][Y]
+    - Cada individuo tiene una posición maxima de recorrido
+    - Cada individuo tiene un fitness basado en 
+    la distancia que recorre.
+    
+    - Seleccionamos 2 padres
+    - Utilizaremo seleccion por torneo
+    - de la población se escogen los 2 con mejor (noc)
+    - estos 2 escogidos pelearan a muerte (SANGREEE) 
+        Escoger k (la cantidad de individuos participantes en el torneo) individuos de la población aleatoriamente.
+        Escoger el individuo más apto del torneo con probabilidad p
+        Escoger el segundo individuo más apto con probabilidad p(1-p)
+        Escoger el k-esimo individuo más apto con probabilidad p(1-p)^k
+    - 
+
+      -los papa tienen un tiempo de vida dentro  de un cliclo while y for
+      -       
+    TODO: Apartir de los 2 padres escogidos, generamos los hijos
+    TODO: Con Crossover de un unico punto
+
+
+    -remplazo generacional se realizara con un Gap Generacional se evaluan los dos esquemas anteriores y la poblacion no cambia si el mismo es > de 3%
+    '''
+
+
+class Chromosome:
+    Genes = None
+    Fitness = None
+
+    def __init__(self, genes, fitness):
+        self.Genes = genes
+        self.Fitness = fitness
+
+class Fitness:
+    NumbersInSequenceCount = None
+    Total = None
+
+    def __init__(self, total, numbersInSequenCount):
+        self.Total = total
+        self.NumbersInSequenceCount = numbersInSequenCount
+
+
+
+    # else:
+    #     pass
+
+    #
+    #
+    # if xpos > xpos_max:
+    #     xpos_max = xpos
+    #     counter = 0
+    #     fitness += 15
+    # else:
+    #     counter += 1
+    #
+    #
+    # print(f'xpos = {xpos_max} counter = {counter} fitness = {fitness}')
+    #
+    # if counter == 350 and limit <= 10:
+    #     done = True
+    #     poblacion[limit] = Chromosome(action, fitness, xpos_max)
+    #     print(poblacion)
+    #     counter = 0
+    #     fitness = 0
+    #     limit += 1
+    #     xpos_max = 0
+    #     env.reset()
+
+
+
+
+
